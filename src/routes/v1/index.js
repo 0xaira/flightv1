@@ -1,9 +1,7 @@
 const express = require('express');
-
-const v1Routes = require('./v1');
-
 const router = express.Router();
+const airplaneRoutes = require('./airplane');
 
-router.use('/v1', v1Routes);
+router.use('/airplanes', airplaneRoutes);
 
 module.exports = router;
