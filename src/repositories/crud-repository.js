@@ -1,19 +1,14 @@
-class crudRepository {
-  constructor(model) {
-    this.model = model;
-  }
+class CrudRepository {
+    constructor(model) {
+        this.model = model;
+    }
 
-  async create(data) {
-    try{
+    async create(data) {
         const response = await this.model.create(data);
         return response;
     }
-    catch(error){
-        throw error;
-    }
-  }
-  async destroy(data){
-    try{
+
+    async destroy(data) {
         const response = await this.model.destroy({
             where: {
                 id: data
@@ -21,42 +16,25 @@ class crudRepository {
         });
         return response;
     }
-    catch(error){
-        throw error;
+
+    async get(data) {
+        const response = await this.model.findByPk(data);
+        return response;
     }
-  }
-    async get(data){
-        try{
-            const response = await this.model.findByPk(data);
-            return response;
-        }
-        catch(error){
-            throw error;
-        }
+
+    async getAll() {
+        const response = await this.model.findAll();
+        return response;
     }
-    async getAll(){
-        try{
-            const response = await this.model.findAll();
-            return response;
-        }
-        catch(error){
-            throw error;
-        }
+
+    async update(id, data) {
+        const response = await this.model.update(data, {
+            where: {
+                id: id
+            }
+        })
+        return response;
     }
-    async update(data){
-        try{
-            const response = await this.model.update(data, {
-                where: {
-                    id: id
-                }
-            });
-            return response;
-        }
-        catch(error){
-            throw error;
-        }
-    }
-  
 }
 
-module.exports = crudRepository;
+module.exports = CrudRepository;
