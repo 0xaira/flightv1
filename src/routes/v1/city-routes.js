@@ -7,4 +7,10 @@ const router = express.Router();
 router.post('/', 
         CityController.createCity);
 
+router.patch('/:id', 
+            CityController.updateCity);
+
+router.delete('/:id', 
+            CityController.destroyCity);
+
 module.exports = router;
