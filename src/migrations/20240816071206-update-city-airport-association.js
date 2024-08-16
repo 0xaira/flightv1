@@ -19,4 +19,3 @@ module.exports = {
     await queryInterface.removeConstraint('Airports', 'city_fkey_constraint');
   }
 };
-
