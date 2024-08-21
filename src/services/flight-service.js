@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 
 const { FlightRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
-
+const { Op } = require('sequelize');
 
 const flightRepository = new FlightRepository();
 
@@ -20,8 +20,27 @@ async function createFlight(data) {
         }
         throw new AppError('Cannot create a new Flight object', StatusCodes.INTERNAL_SERVER_ERROR);
     }
+
+    
+}
+async function getAllFlights(query) {
+    let customFilter = {};
+    let sortFilter = [];
+    if(query.trips) {
+
+       [departureAirportId, arrivalAirportId] = query.trips.split("-"); 
+       customFilter.departureAirportId = departureAirportId;
+       customFilter.arrivalAirportId = arrivalAirportId;
+    }
+    try {
+        const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
+        return flights;
+    } catch(error) {
+        throw new AppError('Cannot fetch data of all the flights', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
 }
 
 module.exports = {
     createFlight,
+    getAllFlights,
 }
