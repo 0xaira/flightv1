@@ -32,6 +32,12 @@ async function getAllFlights(query) {
        customFilter.departureAirportId = departureAirportId;
        customFilter.arrivalAirportId = arrivalAirportId;
     }
+    if(query.price) {
+        [minPrice, maxPrice] = query.price.split("-");
+        customFilter.price = {
+            [Op.between]: [minPrice, ((maxPrice == undefined) ? 20000: maxPrice)]
+        }
+    }
     try {
         const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
         return flights;
